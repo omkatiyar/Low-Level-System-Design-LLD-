@@ -189,13 +189,12 @@ public:
 CVaR(double risk=0): risk(risk){}
  double calculateRisk(vector<Asset*> assets) override{
      for (auto& a : assets) {
-           double sigma = a->getVolatility();
+           double sigma = a->getVolatility({a->getPrice(),a->getPrice()-10,a->getPrice()-20});
            double value = a->getPrice();
            risk += 1.65 * sigma * value; // 95% Z-score
         }
         return risk + 5 ;
     }
-
 };
 
 int main(){
