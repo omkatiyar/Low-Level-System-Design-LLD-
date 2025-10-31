@@ -1,5 +1,22 @@
 #include <bits/stdc++.h>
 using namespace std;
+class FeeStrategy{
+    public:
+virtual double getFee()=0;
+~FeeStrategy(){}
+};
+
+class DomesticFee: public FeeStrategy{
+double getFee() override{
+    return 0.01;
+}
+};
+
+class International: public FeeStrategy{
+double getFee() override{
+    return 0.03;
+}
+};
 
 class PaymentStrategy{
 public:
@@ -58,14 +75,20 @@ public:
     }
 };
 
-class PaymentMethod{
+class PaymentMethod{  
 public:
+
+static unordered_map<string, function<PaymentStrategy*()>>& registry(double bankBalance) {
+        static unordered_map<string, function<PaymentStrategy*()>> map = {
+            {"UPI", [bankBalance]() { return new UPI(bankBalance); }},
+            {"CreditCard", [bankBalance]() { return new CreditCard(bankBalance); }},
+            {"Mortgage", [bankBalance]() { return new NetBanking(bankBalance); }}
+        };
+        return map;
+    }
+
 static PaymentStrategy* createMethod(string type,double bankBalance){
-    unordered_map<string,function<PaymentStrategy* ()>>mp = {
-        {"UPI",[bankBalance](){return new UPI(bankBalance);}},
-        {"NetBanking", [bankBalance](){return new NetBanking(bankBalance);}},
-        {"CreditCard", [bankBalance](){return new CreditCard(bankBalance);}}
-    };
+    unordered_map<string,function<PaymentStrategy* ()>>mp = registry(bankBalance);
     if(mp.find(type)==mp.end()){
         cout<<" No payment method chosen, defaulting to UPI"<<endl;
         return new UPI(bankBalance);
@@ -74,12 +97,18 @@ static PaymentStrategy* createMethod(string type,double bankBalance){
         return mp[type]();
     }
 }
+
+static void registerNewPaymentMethod(const string& type,double bankBalance, function<PaymentStrategy*()> creator) {
+        registry(bankBalance)[type] = creator;
+    }
 };
 
 int main(){
+FeeStrategy* fs = new DomesticFee();
+double f = fs->getFee();
 PaymentMethod* pm = new PaymentMethod();
 PaymentStrategy* ps = pm->createMethod("NetBanking",1008.5);
-ps->pay(189.23);
-ps->pay(2000.8);
+ps->pay(8.5+f*8.5);
+ps->pay(990+f*990);
 return 0;
 }

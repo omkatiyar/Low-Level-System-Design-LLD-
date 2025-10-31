@@ -72,9 +72,9 @@ void payNow(double amount){
 };
 
 int main(){
-PaymentStrategy* ps = new UPI(2018.37);
+PaymentStrategy* ps = new UPI(2018.37);// account balance is initialized to 2018.37
 PaymentFlatform* pf = new PaymentFlatform(ps);
-pf->payNow(190.2);
+pf->payNow(190.2); // paying 190.2
 }
 
 
