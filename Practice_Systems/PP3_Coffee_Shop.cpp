@@ -85,25 +85,51 @@ public:
     }
 };
 
+class CoffeeShop{
+    private:
+    ICoffeeFactory* cf;
+    Coffee* c;
+    public:
+    Coffee* takeOrder(){
+        string coffeeType;
+        vector<string>addOns={"Milk","WhippedCream"};
+        cin>>coffeeType;
+        cf = new CoffeeFactory();
+        c = cf->getCoffee(coffeeType);
+        for(auto a: addOns){
+            if(a=="Milk")
+            c = new Milk(c);
+            else if(a=="Sugar")
+            c = new Sugar(c);
+            else if(a == "WhippedCream")
+            c = new WhippedCream(c);
+            else{}
+        }
+        return c;
+    }
+};
+
 // ===== Main =====
 int main() {
     // Create factory
-    ICoffeeFactory* factory = new CoffeeFactory();
+    // ICoffeeFactory* factory = new CoffeeFactory();
 
-    // Step 1: Create a base coffee from factory
-    Coffee* myCoffee = factory->getCoffee("Latte");
+    // // Step 1: Create a base coffee from factory
+    // Coffee* myCoffee = factory->getCoffee("Latte");
 
-    // Step 2: Add decorators dynamically
-    myCoffee = new Milk(myCoffee);
-    myCoffee = new Sugar(myCoffee);
-    myCoffee = new WhippedCream(myCoffee);
+    // // Step 2: Add decorators dynamically
+    // myCoffee = new Milk(myCoffee);
+    // myCoffee = new Sugar(myCoffee);
+    // myCoffee = new WhippedCream(myCoffee);
 
-    // Step 3: Print final decorated coffee
-    cout << "Your Order: " << myCoffee->createCoffee() << endl;
+    // // Step 3: Print final decorated coffee
+    // cout << "Your Order: " << myCoffee->createCoffee() << endl;
 
-    // Clean up memory
-    delete myCoffee;
-    delete factory;
-
+    // // Clean up memory
+    // delete myCoffee;
+    // delete factory;
+    CoffeeShop cs;
+    Coffee* c = cs.takeOrder();
+    cout<<"Your order: "<<c->createCoffee()<<endl;
     return 0;
 }

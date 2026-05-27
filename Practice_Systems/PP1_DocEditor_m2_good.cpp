@@ -15,7 +15,6 @@ public:
 class TextElement : public DocumentElement {
 private:
     string text;
-
 public:
     TextElement(string text) {
         this->text = text;

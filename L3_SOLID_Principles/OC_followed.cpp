@@ -96,6 +96,11 @@ int main(){
     Product* ov=new Product("para",23000);
     Product* tr=new Product("philips",1450);
     ShoppingCart* sc = new ShoppingCart();
+    // vector<Product*> pv = sc->getProducts();
+    // pv.push_back(al);
+    // pv.push_back(ov);
+    // pv.push_back(tr);
+    /// if we use above method then products are not added in the shopping_cart, we should use:
     sc->addProducts(al);
     sc->addProducts(ov);
     sc->addProducts(tr);

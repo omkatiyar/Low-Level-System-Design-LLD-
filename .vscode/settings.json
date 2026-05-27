@@ -1,0 +1,16 @@
+{
+    "files.associations": {
+        "unordered_map": "cpp",
+        "__hash_table": "cpp",
+        "__tree": "cpp",
+        "array": "cpp",
+        "limits": "cpp",
+        "ratio": "cpp",
+        "variant": "cpp",
+        "complex": "cpp",
+        "type_traits": "cpp",
+        "forward_list": "cpp",
+        "vector": "cpp"
+    },
+    "C_Cpp.default.compilerPath": "/usr/bin/clang++"
+}
